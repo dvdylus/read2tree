@@ -1,0 +1,13 @@
+*~
+build
+dist
+read2tree.egg-info
+tmp/*
+.Rhistory
+.RData
+*pyc
+tmp
+**/.ropeproject
+**/__pycache__
+**/.ipynb_checkpoints
+.python-version
