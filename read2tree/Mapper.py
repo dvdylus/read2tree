@@ -18,6 +18,7 @@ import pyopa
 import os
 import shutil
 import glob
+import sys
 import subprocess
 from tqdm import tqdm
 from Bio import SeqIO, SeqRecord, Seq
@@ -122,7 +123,8 @@ class Mapper(object):
                 ngm_wrapper.options.options['-R'].set_value(float(par[2]))
             ngm = ngm_wrapper()
             bam_file = ngm['file']
-
+        sys.stdout.write("--- ngm finished ---")
+        sys.stderr.write("--- ngm finished ---")
         self._rm_file(ref_tmp_file_handle + "-enc.2.ngm", ignore_error=True)
         self._rm_file(ref_tmp_file_handle + "-ht-13-2.2.ngm", ignore_error=True)
         self._rm_file(ref_tmp_file_handle + "-ht-13-2.3.ngm", ignore_error=True)
@@ -341,14 +343,19 @@ class Mapper(object):
             if os.path.exists(sam_file):
                 self._output_shell(
                     'samtools view -F 4 -bh -S -@ ' + str(self.args.threads) + ' -o ' + bam_file + " " + sam_file)
-
+            sys.stdout.write("--- finished bam to sam ---")
+            sys.stderr.write("--- finished bam to sam ---")
         if os.path.exists(bam_file):
             self._output_shell(
                 'samtools sort -m 2G  -@ ' + str(self.args.threads) + ' -o ' + outfile_name + "_sorted.bam " + bam_file)
+            sys.stdout.write("--- finished bam sort ---")
+            sys.stderr.write("--- finished bam sort ---")
 
         if os.path.exists(outfile_name + "_sorted.bam"):
             self._output_shell(
                 'samtools index -@ ' + str(self.args.threads) + ' ' + outfile_name + "_sorted.bam")
+            sys.stdout.write("--- finished bam index ---")
+            sys.stderr.write("--- finished bam index ---")
             # self._output_shell('bedtools genomecov -bga -ibam ' + outfile_name + '_sorted.bam | grep -w 0$ > ' + outfile_name + "_sorted.bed")
 
         # self._rm_file(bam_file, ignore_error=True)
@@ -363,6 +370,8 @@ class Mapper(object):
             self._bin_reads(ref_file, outfile_name + '_sorted.bam')
 
         consensus = self._build_consensus_seq(ref_file, outfile_name + '_sorted.bam')
+        sys.stdout.write("--- finished consensus ---")
+        sys.stderr.write("--- finished consensus ---")
 
         all_consensus = []
         if consensus:
