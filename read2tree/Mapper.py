@@ -35,7 +35,6 @@ from read2tree.wrappers.read_mappers import NGMLR
 from read2tree.Progress import Progress
 from read2tree.stats.Coverage import Coverage
 from read2tree.stats.SeqCompleteness import SeqCompleteness
-from read2tree.FastxReader import FastxReader
 
 
 logger = logging.getLogger(__name__)
@@ -144,8 +143,8 @@ class Mapper(object):
             if ref_set is not None:
                 self.mapped_records = \
                     self._map_reads_to_references(ref_set)
-                #if self.progress.get_mapping_status():
-                #    self.progress.set_status('map')
+              #  if self.progress.get_mapping_status():
+              #      self.progress.set_status('map')
             if self.mapped_records and og_set is not None:
                 self.og_records = self._sort_by_og(og_set)
         else:  # re-load already computed mapping
@@ -211,13 +210,7 @@ class Mapper(object):
                          unit=' species'):
             species = file.split("/")[-1].split("_")[0]
             map_reads_species[species] = Reference()
-            fasta_reader = FastxReader(file)
-            records = []
-            with fasta_reader.open_fastx() as f:
-                for name, seqstr, qual in fasta_reader.readfx(f):
-                    seq = Seq.Seq(seqstr, generic_dna)
-                    records.append(SeqRecord.SeqRecord(seq, id=name.lstrip(">"), description='', name=''))
-                    map_reads_species[species].dna = records
+            map_reads_species[species].dna = list(SeqIO.parse(file, "fasta"))
 
             cov = Coverage()
             cov_file_name = os.path.join(in_folder, species + "_OGs_cov.txt")
@@ -242,6 +235,7 @@ class Mapper(object):
                                                int(values[7].replace("\n",
                                                                      ""))])
             self.all_sc.update(seqC.seq_completeness)
+
         return map_reads_species
 
     def _make_tmpdir(self):
@@ -479,7 +473,7 @@ class Mapper(object):
             new_records[read.reference_name] = ("").join(seq)
         return new_records
 
-    def _build_consensus_seq_v2(self, ref_file, bam_file):
+    def _build_consensus_seq_v2(self, ref_file, bam_file, threshold=40):
         """
         Function to build consensus sequence by taking sequence to be mapped
         :param ref_file:
@@ -493,14 +487,14 @@ class Mapper(object):
         for ref in references:
             #     logger.info(read.qual)
             seq = list('N' * len(records[ref]))
-            for pileup_column in bam.pileup(ref, 0, 100000):
+            for pileup_column in bam.pileup(ref, 0, 10):
                 # TODO: improve the selection of a column by its quality
                 # qualities = [pileupread.alignment.query_alignment_qualities[pileupread.query_position] for pileupread in
                 #        pileupcolumn.pileups if not pileupread.is_del and not pileupread.is_refskip]
                 bases = [pileupread.alignment.query_sequence
                          [pileupread.query_position] for pileupread in
                          pileup_column.pileups if not pileupread.is_del and
-                         not pileupread.is_refskip]
+                         not pileupread.is_refskip and pileup_column.n >= threshold]
                 if bases:
                     seq[pileup_column.pos] = self._most_common(bases)
             if len(set(seq)) > 1:  # make sure that mapped sequence contains not only N
