@@ -1,0 +1,17 @@
+2018-09-27 07:15:49,689:read2tree.OGSet:test_1a: Gathering of DNA seq for OGs took 0.02256155014038086.
+2018-09-27 07:15:49,708:read2tree.Mapper:--- Creating tmp directory on local node ---
+2018-09-27 07:15:49,722:read2tree.Mapper:test_1a: Mapping to all references took 0.018074989318847656.
+2018-09-27 07:18:05,068:read2tree.OGSet:test_1a: Gathering of DNA seq for OGs took 0.014971256256103516.
+2018-09-27 07:18:05,082:read2tree.Mapper:--- Creating tmp directory on local node ---
+2018-09-27 07:18:05,094:read2tree.Mapper:test_1a: Mapping to all references took 0.014601707458496094.
+2018-09-27 07:21:33,615:read2tree.OGSet:test_1a: Gathering of DNA seq for OGs took 3.4590110778808594.
+2018-09-27 07:21:33,710:read2tree.Mapper:--- Creating tmp directory on local node ---
+2018-09-27 07:21:33,723:read2tree.Mapper:test_1a: --- Mapping of reads to MOUSE reference species ---
+2018-09-27 07:21:38,599:read2tree.Mapper:test_1a: Mapped 0 / 2000 reads 
+2018-09-27 07:21:38,710:read2tree.Mapper:--- Binning reads to test_1a ---
+2018-09-27 07:22:29,451:read2tree.Progress:test_1a: Mapping unfinished. Mapping of 0 / 6 references are computed!
+2018-09-27 07:22:29,464:read2tree.Progress:test_1a: Mapping unfinished. Mapping of 0 / 6 references are computed!
+2018-09-27 07:22:29,539:read2tree.Mapper:--- Creating tmp directory on local node ---
+2018-09-27 07:22:29,553:read2tree.Mapper:test_1a: --- Mapping of reads to CIOSA reference species ---
+2018-09-27 07:22:33,462:read2tree.Mapper:test_1a: Mapped 2 / 2000 reads 
+2018-09-27 07:22:33,576:read2tree.Mapper:--- Binning reads to test_1a ---

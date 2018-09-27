@@ -1,0 +1,5 @@
+2018-09-27 07:15:08,425:read2tree.OGSet:test_1a: Gathering of DNA seq for OGs took 3.496428966522217.
+2018-09-27 07:15:08,533:read2tree.Mapper:--- Creating tmp directory on local node ---
+2018-09-27 07:15:08,556:read2tree.Mapper:test_1a: --- Mapping of reads to MOUSE reference species ---
+2018-09-27 07:15:13,471:read2tree.Mapper:test_1a: Mapped 0 / 2000 reads 
+2018-09-27 07:15:13,795:read2tree.Mapper:--- Binning reads to test_1a ---
