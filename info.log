@@ -1,0 +1,5 @@
+2018-09-27 07:21:04,163:read2tree.Progress:test_1a: Mapping completed!
+2018-09-27 07:21:04,172:read2tree.Progress:test_1a: Mapping completed!
+2018-09-27 07:21:04,206:read2tree.Progress:test_1a: Mapping completed!
+2018-09-27 07:21:04,236:read2tree.OGSet:test_1a: Appending 0 reconstructed sequences to present OG took 0.01378321647644043.
+2018-09-27 07:21:04,288:read2tree.Aligner:test_1a: Alignment of 0 OGs took 0.022857189178466797.

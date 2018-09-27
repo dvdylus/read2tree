@@ -85,6 +85,9 @@ def parse_args(argv, exe_name, desc):
     arg_parser.add_argument('--coverage', type=float, default=10,
                             help='[Default is 10] coverage in X.')
 
+    arg_parser.add_argument('--coverage_threshold', type=float, default=0,
+                            help='[Default is 0] minimum coverage to consider while mappping reads.')
+
     arg_parser.add_argument('--genome_len', type=int, default=2000000,
                             help='[Default is 2000000] Genome size in bp.')
 

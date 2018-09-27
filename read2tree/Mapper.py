@@ -473,7 +473,7 @@ class Mapper(object):
             new_records[read.reference_name] = ("").join(seq)
         return new_records
 
-    def _build_consensus_seq_v2(self, ref_file, bam_file, threshold=40):
+    def _build_consensus_seq_v2(self, ref_file, bam_file):
         """
         Function to build consensus sequence by taking sequence to be mapped
         :param ref_file:
@@ -487,14 +487,14 @@ class Mapper(object):
         for ref in references:
             #     logger.info(read.qual)
             seq = list('N' * len(records[ref]))
-            for pileup_column in bam.pileup(ref, 0, 10):
+            for pileup_column in bam.pileup(ref, 0, 10000):
                 # TODO: improve the selection of a column by its quality
                 # qualities = [pileupread.alignment.query_alignment_qualities[pileupread.query_position] for pileupread in
                 #        pileupcolumn.pileups if not pileupread.is_del and not pileupread.is_refskip]
                 bases = [pileupread.alignment.query_sequence
                          [pileupread.query_position] for pileupread in
                          pileup_column.pileups if not pileupread.is_del and
-                         not pileupread.is_refskip and pileup_column.n >= threshold]
+                         not pileupread.is_refskip and pileup_column.n >= self.args.coverage_threshold]
                 if bases:
                     seq[pileup_column.pos] = self._most_common(bases)
             if len(set(seq)) > 1:  # make sure that mapped sequence contains not only N
