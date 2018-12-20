@@ -104,8 +104,19 @@ class Aligner(object):
         for rec in alignment:
             codon = codons[rec.id]
             translated_seq.append(
-                SeqRecord(Seq("".join([codon[s] for s in str(rec.seq)]), generic_dna), id=rec.id))
+                SeqRecord(Seq("".join(self._get_translated_seq_list(codon, str(rec.seq))), generic_dna), id=rec.id))
         return MultipleSeqAlignment(translated_seq)
+
+    def _get_translated_seq_list(self, codon, sequence):
+        k = 0
+        new_seq = []
+        for i, s in enumerate(sequence):
+            if '-' in s:
+                new_seq.append('---')
+            else:
+                new_seq.append(codon[k][-1])
+                k = k + 1
+        return new_seq
 
     def _align_worker(self, og_set):
         align_dict = {}
