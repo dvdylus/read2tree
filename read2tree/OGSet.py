@@ -679,7 +679,9 @@ class OG(object):
         """
         if sc:
             sc_ordered = OrderedDict(sorted(sc.items(), key=lambda t: t[-1]))
-            best_record_id = list(sc_ordered.items())[-1][0]
+            selected = OrderedDict({k: v for k, v in sc_ordered.items() if v > threshold})
+            rand_select = random.randint(0, len(selected) - 1) # from the list of possible sequences we selected one randomly
+            best_record_id = list(sc_ordered.items())[rand_select][0]
             seq_completenesses = sc[best_record_id][1]
             if seq_completenesses >= threshold:
                 return (self._get_record_by_id(self.aa, best_record_id),
